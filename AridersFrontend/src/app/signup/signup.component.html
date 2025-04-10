@@ -1,0 +1,45 @@
+<div class="main">
+    <div class="video">
+        <video width="320" height="280"  autoplay>
+            <source src="../../assets/authVideo.mp4" type="video/mp4" autoplay>
+            <source src="movie.ogg" type="video/ogg">
+        </video>
+
+    </div>
+
+    <div class="signupContainer">
+       
+        <h1>A-RIDERS</h1>
+        <p>Lets get you started!</p>
+        <p  class="line" *ngIf="loadingLine"></p>
+
+        <div class="formContainer">
+           
+            <form class="signUpForm" [formGroup]="signupForm" (ngSubmit)="onSignUp()">
+                <input type="text" placeholder="First Name" formControlName="firstName" 
+                    [class.invalid]="signupForm.get('firstName')?.invalid && (signupForm.get('firstName')?.touched)">
+                    <p class="error" *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.hasError('required')">
+                        First name is required.
+                    </p>
+
+                <input type="text" placeholder="Last Name" formControlName="lastName"
+                    [class.invalid]="signupForm.get('lastName')?.invalid && (signupForm.get('lastName')?.touched)"> 
+
+                <input type="email" placeholder="Email" formControlName="email"
+                    [class.invalid]="signupForm.get('email')?.invalid && (signupForm.get('email')?.touched)">
+
+                <input type="text" placeholder="Phone Number" formControlName="phoneNumber"
+                    [class.invalid]="signupForm.get('phoneNumber')?.invalid && (signupForm.get('phoneNumber')?.touched)">
+
+                <input type="password" placeholder="Password" formControlName="password"
+                    [class.invalid]="signupForm.get('password')?.invalid && (signupForm.get('password')?.touched)">
+
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+                    [class.invalid]="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.touched)">
+
+                <button type="submit" data-cy="signup-btn" class="signup-btn" value="Submit">Sign up</button>
+            </form>
+        </div>
+
+    </div>
+</div>
