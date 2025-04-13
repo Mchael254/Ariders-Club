@@ -10,7 +10,7 @@
     <div class="signupContainer">
        
         <h1>A-RIDERS</h1>
-        <p>Lets get you started!</p>
+        <p style="color: #d2d4c8;">Adventure awaits</p>
         <p  class="line" *ngIf="loadingLine"></p>
 
         <div class="formContainer">
@@ -62,6 +62,10 @@
                     </p>
 
                 <button type="submit" data-cy="signup-btn" class="signup-btn" value="Submit">Sign up</button>
+                <div style="font-size: small; margin-top: 5px;margin-bottom: 10px; text-align: center;">
+                    <span>Already have an account? </span>
+                    <a routerLink="/signin" style="margin-left: 4px;">Sign in</a>
+                  </div>
             </form>
         </div>
 

@@ -6,4 +6,9 @@ export interface signupForm {
     password: string;
     confirmPassword: string;
 }
+
+export interface loginForm{
+    password: string;
+    email: string;
+}
   

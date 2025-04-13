@@ -62,6 +62,10 @@ export class SignupComponent {
 
   onSignUp() {
     this.allFieldsValidator()
+
+    if (!this.signupForm.valid) {
+      return;
+    }
     
     if(!this.passwordMatch()){
       return;
@@ -76,6 +80,7 @@ export class SignupComponent {
           const errorMessage = result.error.message
           this.response.showError(`${errorMessage}`)
         } else {
+          this.response.showSuccess('success, check your  email to confrim account')
           this.router.navigate(['/signin'])
         }
 
