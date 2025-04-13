@@ -23,19 +23,43 @@
                     </p>
 
                 <input type="text" placeholder="Last Name" formControlName="lastName"
-                    [class.invalid]="signupForm.get('lastName')?.invalid && (signupForm.get('lastName')?.touched)"> 
+                    [class.invalid]="signupForm.get('lastName')?.invalid && (signupForm.get('lastName')?.touched)">
+                    <p class="error" *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.hasError('required')">
+                        Last Name is required.
+                    </p> 
 
                 <input type="email" placeholder="Email" formControlName="email"
                     [class.invalid]="signupForm.get('email')?.invalid && (signupForm.get('email')?.touched)">
+                    <p class="error" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('required')">
+                        Email name is required.
+                    </p>
+                    <p class="error" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('pattern')">
+                        Invlid email format 
+                    </p>
 
                 <input type="text" placeholder="Phone Number" formControlName="phoneNumber"
                     [class.invalid]="signupForm.get('phoneNumber')?.invalid && (signupForm.get('phoneNumber')?.touched)">
+                    <p class="error" *ngIf="signupForm.get('phoneNumber')?.touched && signupForm.get('phoneNumber')?.hasError('required')">
+                        Phone Number is required.
+                    </p>
+                    <p class="error" *ngIf="signupForm.get('phoneNumber')?.touched && signupForm.get('phoneNumber')?.hasError('pattern')">
+                        Phone Number must be 10 digits
+                    </p>
 
                 <input type="password" placeholder="Password" formControlName="password"
                     [class.invalid]="signupForm.get('password')?.invalid && (signupForm.get('password')?.touched)">
-
+                    <p class="error" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.hasError('required')">
+                        Password is required
+                    </p>
+                    <p class="error" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.hasError('minlength')">
+                        Password must be atleast 8 characters
+                    </p>
+                
                 <input type="password" placeholder="Confirm Password" formControlName="confirmPassword"
                     [class.invalid]="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.touched)">
+                    <p class="error" *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.hasError('required')">
+                        ConfirmPassword is required
+                    </p>
 
                 <button type="submit" data-cy="signup-btn" class="signup-btn" value="Submit">Sign up</button>
             </form>
