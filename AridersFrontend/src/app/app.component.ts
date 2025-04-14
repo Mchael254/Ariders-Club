@@ -13,7 +13,18 @@ export class AppComponent {
 
   ngOnInit():void{
     this.auth.supabase.auth.onAuthStateChange((event, session)=>{
-      console.log(event,session)
+     if(event === 'SIGNED_IN'){
+      const user = session?.user
+      
+      this.auth.currentUser.set({
+        email:user?.email!,
+        firstName:user?.user_metadata?.['firstName'] ?? 'No name'
+      });
+
+     }else if(event === 'SIGNED_OUT'){
+      this.auth.currentUser.set(null)
+
+     }
     })
 
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { createClient, AuthResponse } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -8,8 +8,10 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   constructor() { }
+
+  currentUser = signal<{email:string, firstName:string} | null> (null)
  
-  //supabase instance connection
+  //supabase connection
   supabase = createClient(environment.supabaseUrl,environment.supabaseKey)
 
   //user registration
@@ -41,4 +43,32 @@ export class AuthService {
     return from(promise)
 
   }
+
+  get currentUserValue() {
+    return this.currentUser();
+  }
+  
+
+  //user logout
+  logout():void{
+    this.supabase.auth.signOut()
+  }
+
+  ngOnInit():void{
+    const user = this.currentUser();
+    if(user){
+      localStorage.setItem('userDetails', JSON.stringify(user))
+    }
+
+    this.getStoredUser()
+
+  }
+
+  getStoredUser(){
+    const parsedUser = localStorage.getItem('userDetails');
+    return parsedUser ? JSON.parse(parsedUser) : null;
+  }
+  
+
+
 }
