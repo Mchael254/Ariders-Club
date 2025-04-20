@@ -2,8 +2,9 @@ import express, { Request, Response } from 'express'
 import bcrypt from "bcrypt";
 import { v4 } from 'uuid';
 import jwt from 'jsonwebtoken'
-import { loginMemberValidationSchema, userRegisterValidationSchema } from '../validators/userValidator';
+
 import { supabase } from '../server';
+import { loginMemberValidationSchema, userRegisterValidationSchema } from '../validators/userValidator';
 
 
 
