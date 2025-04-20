@@ -65,8 +65,8 @@ fa-icon{
     top: 0;
     right: -250px; 
     width: 150px;
-    height: 60%;
-    background-color:#ffff;
+    height: 65%;
+    background-color:#fff;
     color: black;
     transition: right 0.3s ease;
     display: flex;

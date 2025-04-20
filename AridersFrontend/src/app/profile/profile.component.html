@@ -1,0 +1,183 @@
+<div class="main">
+    <div class="navigation">
+        <h4>A Riders</h4>
+
+        <div class="navLinks">
+            <ul>
+                <li><a (click)="setView('dashboard')">Dashboard</a></li>
+                <li><a (click)="setView('profile')">Profile</a></li>
+                <li><a (click)="setView('events')">Events</a></li>
+                <li><a (click)="setView('rides')">Rides</a></li>
+                <li><a routerLink="/login">Logout</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="viewPanel">
+        <div class="viewBar">
+            <div class="account">
+                <p>{{userEmail}}</p>
+                <img src="../../assets/batProfile.jpg" alt="Profile Picture">
+            </div>
+
+            <div class="panelActions">
+                <p>{{currentView}}</p>
+
+            </div>
+
+            <div class="side">
+                <div class="viewBarLinks">
+                    <a (click)="toggleSideNav()"><fa-icon [icon]="faBars"></fa-icon></a>
+                </div>
+
+                <div class="sidePanel" [ngClass]="{'sidePanelOpen':sideNavOpen}">
+                    <div class="sidePanelContent">
+                        <h4>A riders</h4>
+                        <div class="closeSideNav" (click)="toggleSideNav()">Close</div>
+                        <ul>
+                            <li><a (click)="setView('dashboard')">Dashboard</a></li>
+                            <li><a (click)="setView('profile')">Profile</a></li>
+                            <li><a (click)="setView('events')">Events</a></li>
+                            <li><a (click)="setView('rides')">Rides</a></li>
+                            <li><a routerLink="/login">Logout</a></li>
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- panel -->
+
+        <div class="panel">
+            <!-- profile -->
+            <div class="profile" *ngIf="currentView === 'profile'">
+                <div class="profileMajor">
+                    <div class="userDetails">
+                        <img src="../../assets/batProfile.jpg" alt="">
+                        <!-- <p>{{userName}}</p> -->
+                        <div *ngIf="userDetails" style="text-align: center;">
+                            <p>{{userDetails.email}}</p>
+                            <p>{{userDetails.firstName}}</p>
+
+                        </div>
+                        <button>Edit Profile</button>
+
+                    </div>
+                    <div class="membershipStatus">
+                        <h4>Membership Status <span>Active</span></h4>
+                        <p>Member Since: <span>2023-10-01 </span></p>
+                    </div>
+
+                </div>
+                <div class="profileMini" *ngIf="profileMini">
+                    <div class="userDetails">
+                        <img src="../../assets/batProfile.jpg" alt="">
+                        <p>John Doe</p>
+                        <p>useremail.com</p>
+                        <button>Edit Profile</button>
+
+                    </div>
+                    <div class="membershipStatus">
+                        <h4>Membership Status <span>Active</span></h4>
+                        <p>Member Since: <span>2023-10-01 </span></p>
+                    </div>
+
+                </div>
+                <div class="profileEdit">
+                    <p style="margin-top: 5px;">Edit your profile</p>
+                    <div class="formContainer">
+                        <form action="" class="editForm" (ngSubmit)="onEditProfile()">
+                            <input type="email" placeholder="Email">
+                            <input type="text" placeholder="password">
+                            <input type="text" placeholder="confrimPassword">
+                            <button class="editBtn" *ngIf="editProfileBtn">Edit Profile</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- dashboard -->
+            <div class="dashboard" *ngIf="currentView === 'dashboard'">
+                <h4>Dashboard</h4>
+                <div class="dashboardContent">
+                    <div class="dashboardCard">
+                        <h4>Upcoming Events</h4>
+                        <p>Event 1</p>
+                        <p>Event 2</p>
+                        <p>Event 3</p>
+                    </div>
+                    <div class="dashboardCard">
+                        <h4>Recent Rides</h4>
+                        <p>Ride 1</p>
+                        <p>Ride 2</p>
+                        <p>Ride 3</p>
+                    </div>
+                    <div class="dashboardCard">
+                        <h4>Notifications</h4>
+                        <p>Notification 1</p>
+                        <p>Notification 2</p>
+                        <p>Notification 3</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- events -->
+            <div class="events" *ngIf="currentView === 'events'">
+                <h4>Events</h4>
+                <div class="eventsContent">
+                    <div class="eventCard">
+                        <h4>Event 1</h4>
+                        <p>Date: 2023-10-01</p>
+                        <p>Location: Location 1</p>
+                    </div>
+                    <div class="eventCard">
+                        <h4>Event 2</h4>
+                        <p>Date: 2023-10-02</p>
+                        <p>Location: Location 2</p>
+                    </div>
+                    <div class="eventCard">
+                        <h4>Event 3</h4>
+                        <p>Date: 2023-10-03</p>
+                        <p>Location: Location 3</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- rides -->
+            <div class="rides" *ngIf="currentView === 'rides'">
+                <h4>Rides</h4>
+                <div class="ridesContent">
+                    <div class="rideCard">
+                        <h4>Ride 1</h4>
+                        <p>Date: 2023-10-01</p>
+                        <p>Location: Location 1</p>
+                    </div>
+                    <div class="rideCard">
+                        <h4>Ride 2</h4>
+                        <p>Date: 2023-10-02</p>
+                        <p>Location: Location 2</p>
+                    </div>
+                    <div class="rideCard">
+                        <h4>Ride 3</h4>
+                        <p>Date: 2023-10-03</p>
+                        <p>Location: Location 3</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
