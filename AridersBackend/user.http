@@ -1,0 +1,30 @@
+
+### get all users
+get http://localhost:3000/user/allMembers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMxNzE1MGUzLTk5OWEtNGU2Yy1iM2U4LTEyZDM0MDZiMjZiNiIsImVtYWlsIjoibWlrZXZlbnVtOUBnbWFpbC5jb20iLCJyb2xlIjoibWVtYmVyIiwiaWF0IjoxNzQ1MTc3MjYwLCJleHAiOjE3NDU3ODIwNjB9.nC8Z5a2wdfrnsgl3lCR10II83wRK4RBHsmRzcDePhhE
+
+
+
+### add user
+post http://localhost:3000/user/registerMember
+Content-Type: application/json
+
+{
+    "first_name": "Venum",
+    "last_name": "Michael",
+    "phone_number": "1234567890",
+    "password": "Password123",
+    "email": "mikevenum9@gmail.com"
+
+}
+
+### login user
+post http://localhost:3000/user/loginMember
+Content-Type: application/json
+
+{
+    "email": "mikevenum9@gmail.com",
+    "password": "Password123"
+}
+
