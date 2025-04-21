@@ -68,11 +68,12 @@ export class SigninComponent {
         } else {
           this.router.navigate(['/profile']);
         }
-    
+      },
       error: (err) => {
         const errorMessage = err?.error?.message || err?.error?.error || 'An unexpected error occurred';
 
       }
+    
     });
 
 
