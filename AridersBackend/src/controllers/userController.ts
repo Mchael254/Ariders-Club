@@ -6,9 +6,6 @@ import jwt from 'jsonwebtoken'
 import { supabase } from '../server';
 import { loginMemberValidationSchema, userRegisterValidationSchema } from '../validators/userValidator';
 
-
-
-
 //all members
 export const allMembers = async (req: Request, res: Response) => {
     try {
