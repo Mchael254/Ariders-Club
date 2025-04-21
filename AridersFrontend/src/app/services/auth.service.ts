@@ -15,7 +15,7 @@ export class AuthService {
   }
   private supabase: SupabaseClient;
 
-  private baseUrl = 'http://localhost:3000/user'
+  private baseUrl = 'https://ariders-club.onrender.com/user'
 
   register(userData: any): Observable<any> {
     const url = `https://aidnxywieovjglfrcwty.supabase.co/functions/v1/signupMember`;
