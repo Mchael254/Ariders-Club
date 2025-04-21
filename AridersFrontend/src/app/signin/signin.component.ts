@@ -55,11 +55,26 @@ export class SigninComponent {
         this.response.showSuccess(result.message);
 
         const token = result.token
+
         if(token){
           localStorage.setItem('authToken',token)
+        }else{
+          this.router.navigate(['/sigin'])
+        }
+
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        this.auth.autoLogout(payload.exp);
+
+        //role based redirect
+        const role = payload.role
+        if(role === 'admin'){
+          this.router.navigate(['/admin'])
+        }else{
+          this.router.navigate(['/profile'])
+
         }
         
-        this.router.navigate(['/profile'])
+        this.response.showSuccess('Login successful');
 
       },
 
