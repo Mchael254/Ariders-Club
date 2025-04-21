@@ -14,7 +14,8 @@ exports.userRegisterValidationSchema = joi_1.default.object({
         }
     }),
     phone_number: joi_1.default.string().required().min(10).max(10),
-    password: joi_1.default.string().required().pattern(new RegExp('^[a-zA-Z0-9!@#%$&*()]{0,30}$'))
+    password: joi_1.default.string().required().pattern(new RegExp('^[a-zA-Z0-9!@#%$&*()]{0,30}$')),
+    role: joi_1.default.string()
 });
 exports.loginMemberValidationSchema = joi_1.default.object({
     email: joi_1.default.string().required().email({

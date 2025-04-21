@@ -39,10 +39,11 @@ const allMembers = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.allMembers = allMembers;
 //add member
 const registerMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { first_name, last_name, password, phone_number, email } = req.body;
+    const { first_name, last_name, password, phone_number, email, role } = req.body;
     const { error: validationError } = userValidator_1.userRegisterValidationSchema.validate(req.body);
     if (validationError) {
         res.status(400).json({ error: validationError.details[0].message });
+        return;
     }
     try {
         let id = (0, uuid_1.v4)();
@@ -54,6 +55,7 @@ const registerMember = (req, res) => __awaiter(void 0, void 0, void 0, function*
             p_email: email,
             p_password: hashedPassword,
             p_phone_number: phone_number,
+            p_role: role
         });
         if (error) {
             console.error('RPC Error:', error);

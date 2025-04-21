@@ -31,11 +31,12 @@ export const allMembers = async (req: Request, res: Response) => {
 
 //add member
 export const registerMember = async (req: Request, res: Response) => {
-    const { first_name, last_name, password, phone_number, email} = req.body;
+    const { first_name, last_name, password, phone_number, email,role} = req.body;
     const { error: validationError } = userRegisterValidationSchema.validate(req.body)
 
     if (validationError) {
         res.status(400).json({ error: validationError.details[0].message });
+        return;
     }
 
     try {
@@ -50,6 +51,7 @@ export const registerMember = async (req: Request, res: Response) => {
             p_email: email,
             p_password: hashedPassword,
             p_phone_number: phone_number,
+            p_role:role
           });
           
         if (error) {
