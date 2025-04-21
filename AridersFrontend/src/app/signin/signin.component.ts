@@ -71,7 +71,9 @@ export class SigninComponent {
       },
       error: (err) => {
         const errorMessage = err?.error?.message || err?.error?.error || 'An unexpected error occurred';
-
+        this.response.showError(errorMessage);
+        console.error('Registration error:', err);
+        this.loadingLine = false
       }
     
     });
