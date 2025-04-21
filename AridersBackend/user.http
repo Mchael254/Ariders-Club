@@ -11,12 +11,13 @@ post http://localhost:3000/user/registerMember
 Content-Type: application/json
 
 {
-    "first_name": "Venum",
-    "last_name": "Michael",
+    "first_name": "Test",
+    "last_name": "Admin",
     "phone_number": "1234567890",
     "password": "Password123",
-    "email": "mikevenum9@gmail.com"
-
+    "email": "userTests@gmail.com",
+    "role": "admin"
+    
 }
 
 ### login user

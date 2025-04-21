@@ -12,7 +12,8 @@ export const userRegisterValidationSchema = joi.object({
     phone_number:joi.string().required().min(10).max(10),
     password:joi.string().required().pattern(
         new RegExp ('^[a-zA-Z0-9!@#%$&*()]{0,30}$')
-    )
+    ),
+    role:joi.string()
 })
 
 export const loginMemberValidationSchema = joi.object({
