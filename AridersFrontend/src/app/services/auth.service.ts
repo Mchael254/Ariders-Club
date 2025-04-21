@@ -1,74 +1,25 @@
-import { Injectable, signal } from '@angular/core';
-import { createClient, AuthResponse } from '@supabase/supabase-js';
-import { from, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
-  currentUser = signal<{email:string, firstName:string} | null> (null)
- 
-  //supabase connection
-  supabase = createClient(environment.supabaseUrl,environment.supabaseKey)
+  private baseUrl = 'http://localhost:3000/user'
 
-  //user registration
-  register(firstName:string,lastName:string,email:string,password:string,phoneNumber:string):Observable<AuthResponse>{
-    const promise = this.supabase.auth.signUp({
-      email,
-      password,
-      options:{
-        data:{
-          phoneNumber,
-          firstName,
-          lastName
-        }
-      }
-    });
-
-    return from(promise)
+  register(userData:any):Observable<any>{
+    const url = `${this.baseUrl}/registerMember`;
+    return this.http.post(url, userData)
 
   }
 
-  //user login
-  login(email:string, password:string):Observable<AuthResponse>{
-
-    const promise = this.supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    return from(promise)
-
+  login(loginData:any):Observable<any>{
+    const url = `${this.baseUrl}/loginMember`;
+    return this.http.post(url,loginData )
   }
-
-  get currentUserValue() {
-    return this.currentUser();
-  }
-  
-
-  //user logout
-  logout():void{
-    this.supabase.auth.signOut()
-  }
-
-  ngOnInit():void{
-    const user = this.currentUser();
-    if(user){
-      localStorage.setItem('userDetails', JSON.stringify(user))
-    }
-
-    this.getStoredUser()
-
-  }
-
-  getStoredUser(){
-    const parsedUser = localStorage.getItem('userDetails');
-    return parsedUser ? JSON.parse(parsedUser) : null;
-  }
-  
-
 
 }

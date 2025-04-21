@@ -69,11 +69,7 @@ export class ProfileComponent {
 
   userDetails:any
 
-  ngOnInit(){
-    this.userDetails = this.auth.getStoredUser();
-    console.log(this.userDetails);
-    
-  }
+ 
 
  
 
