@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class SigninComponent {
 
   constructor(private fb: FormBuilder, private response: ResponsesService,
-     private auth:AuthService, private router:Router) { }
+    private auth: AuthService, private router: Router) { }
 
   signinForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i)]],
@@ -47,45 +47,38 @@ export class SigninComponent {
 
     const form = this.signinForm.getRawValue() as loginForm
     const loginData = {
-      email:form.email,
-      password:form.password
+      email: form.email,
+      password: form.password
     }
     this.auth.login(loginData).subscribe({
-      next:(result) =>{
-        this.response.showSuccess(result.message);
-
-        const token = result.token
-
-        if(token){
-          localStorage.setItem('authToken',token)
-        }else{
-          this.router.navigate(['/sigin'])
+      next: async ({ data, error }) => {
+        if (error) {
+          this.response.showError(error.message);
+          return;
         }
-
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        this.auth.autoLogout(payload.exp);
-
-        //role based redirect
-        const role = payload.role
-        if(role === 'admin'){
-          this.router.navigate(['/admin'])
-        }else{
-          this.router.navigate(['/profile'])
-
-        }
-        
+    
+        const session = data.session;
+        const role = session?.user?.user_metadata?.role || 'member';
+        console.log(role);
+  
         this.response.showSuccess('Login successful');
 
+        if (role === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/profile']);
+        }
+    
       },
 
-      error:(err)=>{
-        const errorMessage = err?.error?.message || 'check your internet connection';
+      error: (err) => {
+        const errorMessage = err?.error?.message || err?.error?.error || 'An unexpected error occurred';
         this.response.showError(errorMessage);
         console.error('Registration error:', err);
         this.loadingLine = false
       }
     });
-      
+
 
   }
 
