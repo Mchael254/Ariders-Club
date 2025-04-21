@@ -64,7 +64,7 @@ export class SigninComponent {
       },
 
       error:(err)=>{
-        const errorMessage = err?.error?.message || 'An unexpected error occurred';
+        const errorMessage = err?.error?.message || 'check your internet connection';
         this.response.showError(errorMessage);
         console.error('Registration error:', err);
         this.loadingLine = false
