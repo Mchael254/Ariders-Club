@@ -46,19 +46,31 @@ export class SigninComponent {
     }
 
     const form = this.signinForm.getRawValue() as loginForm
-    this.auth.login(form.email, form.password).subscribe(
-      (result)=>{
-        const errorMessage = result.error?.message
-        if(result.error){
-          this.response.showError(`${errorMessage}`)
-          this.loadingLine = false;
-        }else{
-          this.response.showSuccess('logged in successfully')
-          this.router.navigate(['/profile'])
-        }
+    const loginData = {
+      email:form.email,
+      password:form.password
+    }
+    this.auth.login(loginData).subscribe({
+      next:(result) =>{
+        this.response.showSuccess(result.message);
 
-      });
-   
+        const token = result.token
+        if(token){
+          localStorage.setItem('authToken',token)
+        }
+        
+        this.router.navigate(['/profile'])
+
+      },
+
+      error:(err)=>{
+        const errorMessage = err?.error?.message || 'An unexpected error occurred';
+        this.response.showError(errorMessage);
+        console.error('Registration error:', err);
+        this.loadingLine = false
+      }
+    });
+      
 
   }
 

@@ -66,27 +66,35 @@ export class SignupComponent {
     if (!this.signupForm.valid) {
       return;
     }
-    
-    if(!this.passwordMatch()){
+
+    if (!this.passwordMatch()) {
       return;
     }
 
     const form = this.signupForm.getRawValue() as signupForm
     console.log(form);
-    
-    this.auth.register(form.firstName, form.lastName, form.email, form.password, form.phoneNumber).subscribe(
-      result => {
-        if (result.error) {
-          const errorMessage = result.error.message
-          this.response.showError(`${errorMessage}`)
-        } else {
-          this.response.showSuccess('success, check your  email to confrim account')
-          this.router.navigate(['/signin'])
-        }
+    const userData = {
+      first_name: form.firstName,
+      last_name: form.lastName,
+      email: form.email,
+      password: form.password,
+      phone_number: form.phoneNumber
+    }
 
+    this.auth.register(userData).subscribe({
+      next: (result) => {
+        this.response.showSuccess(result.message);
+
+        this.router.navigate(['/signin']);
+      },
+      error:(err) => {
+        const errorMessage = err?.error?.message || 'An unexpected error occurred';
+        this.response.showError(errorMessage);
+        console.error('Registration error:', err);
+        this.loadingLine = false
       }
 
-    )
+    })
 
   }
 
