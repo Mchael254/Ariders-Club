@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   constructor(private http:HttpClient) { }
 
-  private baseUrl = 'http://localhost:3000/user'
+  private baseUrl = 'https://ariders-club.onrender.com/user'
 
   register(userData:any):Observable<any>{
     const url = `${this.baseUrl}/registerMember`;
