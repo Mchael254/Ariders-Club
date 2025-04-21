@@ -58,7 +58,7 @@ export const registerMember = async (req: Request, res: Response) => {
         }
 
         res.status(201).json({
-            message: 'Rider inserted successfully',
+            message: 'registration successfull',
             data,
         });
     } catch (err) {

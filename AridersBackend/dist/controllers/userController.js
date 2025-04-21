@@ -60,7 +60,7 @@ const registerMember = (req, res) => __awaiter(void 0, void 0, void 0, function*
             res.status(500).json({ message: error.message });
         }
         res.status(201).json({
-            message: 'Rider inserted successfully',
+            message: 'registration successfull',
             data,
         });
     }
