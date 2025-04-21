@@ -26,6 +26,7 @@ export class SignupComponent {
     phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', Validators.required],
+    role:[]
 
   });
 
@@ -88,7 +89,7 @@ export class SignupComponent {
         this.router.navigate(['/signin']);
       },
       error:(err) => {
-        const errorMessage = err?.error?.message || 'An unexpected error occurred';
+        const errorMessage = err?.error?.message || err?.error?.error || 'An unexpected error occurred';
         this.response.showError(errorMessage);
         console.error('Registration error:', err);
         this.loadingLine = false
