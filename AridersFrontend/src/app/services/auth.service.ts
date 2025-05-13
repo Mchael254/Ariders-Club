@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { from, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment.development';
@@ -22,7 +22,9 @@ export class AuthService {
 
     return this.http.post(url, userData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'apikey': environment.supabaseKey,
+        'Authorization': `Bearer ${environment.supabaseKey}`
       }
     })
 
@@ -30,15 +32,16 @@ export class AuthService {
 
   // Login with supabase
   login(loginData: { email: string; password: string }): Observable<any> {
-    return from(this.supabase.auth.signInWithPassword({
-      email: loginData.email,
-      password: loginData.password
-    }));
+    return from(this.supabase.auth.signInWithPassword(loginData)).pipe(
+      tap(response => console.log('Supabase response from service:', response))
+    );
   }
 
-
-
-
-
-
+  logout() {
+  localStorage.removeItem('auth_user');
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('auth_role');
+  localStorage.removeItem('auth_profile_image');
+}
+  
 }

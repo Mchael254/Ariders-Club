@@ -1,32 +1,22 @@
+import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { createClient } from '@supabase/supabase-js';
-import { catchError, from, map } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
+import { selectIsAuthenticated } from '../store/auth/auth.selectors';
 
-const supabaseUrl = environment.supabaseUrl
-const supabaseAnonKey = environment.supabaseAnonKey; 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = () => {
+  const store = inject(Store);
   const router = inject(Router);
 
-  return from(supabase.auth.getSession()).pipe(
-    map(({ data, error }) => {
-      const session = data?.session;
-      const role = session?.user?.user_metadata?.['role'];
-
-      if (session && role === 'member') {
-        return true;
+  return store.select(selectIsAuthenticated).pipe(
+    take(1),
+    map(isAuth => {
+      if (!isAuth) {
+        router.navigate(['/signin']);
+        return false;
       }
-
-      return router.createUrlTree(['/signin']);
-    }),
-    catchError((err) => {
-      console.error('Auth guard error:', err);
-      return [router.createUrlTree(['/signin'])];
+      return true;
     })
   );
-
-
 };

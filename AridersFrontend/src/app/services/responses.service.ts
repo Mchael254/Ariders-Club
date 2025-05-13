@@ -1,33 +1,44 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageService } from 'primeng/api';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ResponsesService {
+  constructor(private messageService: MessageService) {}
 
-  constructor(private sb: MatSnackBar) { }
-
-   //success and error messages
-   showError(message: string, action = 'Close', duration = 2000) {
-    this.sb.open(message, action, {
-      duration,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['success-snackbar']
-
-    })
-
+  //success and error messages
+  showSuccess(message: string, summary = 'Success') {
+    this.messageService.add({
+      severity: 'success',
+      summary,
+      detail: message,
+      life: 3000,
+    });
   }
 
-  showSuccess(message:string, action = 'Close',duration=2000){
-    this.sb.open(message,action,{
-      duration,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['error-snackbar']
-
-    })
-
+  showError(message: string, summary = 'Error') {
+    this.messageService.add({
+      severity: 'error',
+      summary,
+      detail: message,
+      life: 3000
+    });
   }
+
+  showWarning(message: string, summary = 'Warning') {
+    this.messageService.add({
+      severity: 'warn',
+      summary,
+      detail: message,
+      life: 3000
+    });
+  }
+
+  clearMessage() {
+    this.messageService.clear();
+  }
+
 }

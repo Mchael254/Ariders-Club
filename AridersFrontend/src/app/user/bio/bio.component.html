@@ -1,0 +1,97 @@
+<div class="bio">
+  <div class="infoCards" *ngIf="user$ | async as user">
+    <div class="infoCard">
+      <h4>Basic Information</h4>
+      <label>First Name</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['first_name']"
+        (ngModelChange)="onChange('basic')"
+      />
+      <label>Middle Name</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['middle_name']"
+        (ngModelChange)="onChange('basic')"
+      />
+      <label>Last Name</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['last_name']"
+        (ngModelChange)="onChange('basic')"
+      />
+
+      <label>Gender</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['gender']"
+        (ngModelChange)="onChange('basic')"
+      />
+      <label>Date of Birth</label>
+      <p-calendar [(ngModel)]="dob" inputStyleClass="custom-calendar-input">
+        <ng-template let-date>
+          <strong
+            *ngIf="date.day > 10 && date.day < 15; else elseBlock"
+            style="text-decoration: line-through"
+          >
+            {{ date.day }}
+          </strong>
+          <ng-template #elseBlock>{{ date.day }}</ng-template>
+        </ng-template>
+      </p-calendar>
+
+      <div class="changePrompt" *ngIf="changed.basic">
+        <button (click)="save('basic')">Save</button>
+        <button (click)="cancel('basic')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- address -->
+    <div class="infoCard">
+      <h4>Address</h4>
+      <label>County</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['county']"
+        (ngModelChange)="onChange('address')"
+      />
+
+      <label>City</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['city']"
+        (ngModelChange)="onChange('address')"
+      />
+    </div>
+
+    <!-- contact -->
+    <div class="infoCard">
+      <h4>Contact</h4>
+      <label>Home Phone</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['phone_number']"
+        (ngModelChange)="onChange('contact')"
+      />
+
+      <label>Work Phone</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['work_phone']"
+        (ngModelChange)="onChange('contact')"
+      />
+      <label>Emergency Phone</label>
+      <input
+        type="text"
+        [(ngModel)]="user.user_metadata['emergency_phone']"
+        (ngModelChange)="onChange('contact')"
+      />
+      <label>Email</label>
+      <input
+        type="text"
+        [(ngModel)]="user.email"
+        (ngModelChange)="onChange('contact')"
+      />
+    </div>
+  </div>
+</div>

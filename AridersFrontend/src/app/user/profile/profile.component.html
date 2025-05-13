@@ -1,0 +1,260 @@
+<div class="main">
+  <div class="navigation">
+    <h4>A Riders</h4>
+
+    <div class="navLinks">
+      <ul>
+        <li><a (click)="setView('dashboard')">Dashboard</a></li>
+        <li><a (click)="setView('profile')">Profile</a></li>
+        <li><a (click)="setView('events')">Events</a></li>
+        <li><a (click)="setView('rides')">Rides</a></li>
+        <li><a (click)="setView('bio')">Bio</a></li>
+        <li><a (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="viewPanel">
+    <div class="viewBar">
+      <div class="account">
+        <p>{{ userEmail }}</p>
+        <img src="../../assets/ariders.jpg" alt="Profile Picture" />
+      </div>
+
+      <div class="panelActions">
+        <p>{{ currentView }}</p>
+      </div>
+
+      <div class="side">
+        <div class="viewBarLinks">
+          <a (click)="toggleSideNav()"><fa-icon [icon]="faBars"></fa-icon></a>
+        </div>
+
+        <div class="sidePanel" [ngClass]="{ sidePanelOpen: sideNavOpen }">
+          <div class="sidePanelContent">
+            <h4>A riders</h4>
+            <div class="closeSideNav" (click)="toggleSideNav()">Close</div>
+            <ul>
+              <li><a (click)="setView('dashboard')">Dashboard</a></li>
+              <li><a (click)="setView('profile')">Profile</a></li>
+              <li><a (click)="setView('events')">Events</a></li>
+              <li><a (click)="setView('rides')">Rides</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- panel -->
+
+    <div class="panel">
+      <!-- dashboard -->
+      <div class="dashboard" *ngIf="currentView === 'dashboard'"></div>
+
+      <!-- profile -->
+      <div class="profile" *ngIf="currentView === 'profile'">
+        <div class="profileMajor">
+          <div class="userDetails" *ngIf="user$ | async as user">
+            <!-- <div class="userDetails"> -->
+            <div class="image-container">
+              <img
+                [src]="previewImage || '../../assets/batProfile.jpg'"
+                alt="Profile Image"
+              />
+              <!-- <img
+              [src]="
+                previewImage ||
+                user.user_metadata['profileImage'] ||
+                '../../assets/batProfile.jpg'
+              "
+              alt="Profile Image"
+            /> -->
+
+              <button
+                *ngIf="profileBtn && !previewImage"
+                style="background-color: white"
+                class="edit-icon"
+                (click)="fileInput.click()"
+              >
+                <fa-icon [icon]="faPen"></fa-icon>
+              </button>
+
+              <div
+                *ngIf="previewImage"
+                style="position: absolute; top: 8px; left: 8px"
+              >
+                <button
+                  (click)="cancelImageChange()"
+                  class="cancel-btn"
+                  style="margin-right: 6px"
+                >
+                  Cancel
+                </button>
+                <button
+                  (click)="uploadImage()"
+                  class="save-btn"
+                  style="background-color: green; color: white"
+                >
+                  Save
+                </button>
+              </div>
+
+              <input
+                type="file"
+                #fileInput
+                accept="image/*"
+                style="display: none"
+                (change)="onImageSelected($event)"
+              />
+            </div>
+
+            <div class="profile-info">
+              <p><strong>Email:</strong> {{ user.email }}</p>
+              <!-- <p><strong>Role:</strong> {{ user.user_metadata["role"] }}</p> -->
+              <p><strong>Member since:</strong> {{ user.created_at | date }}</p>
+              <!-- <p>venum</p>
+              <p>member</p>
+              <p>2023-10-01</p> -->
+            </div>
+
+            <button *ngIf="profileBtn" (click)="editProfile()">
+              change password
+            </button>
+          </div>
+
+          <div class="membershipStatus">
+            <h4>Membership Status: <span style="color: green">Active</span></h4>
+          </div>
+        </div>
+        <div class="profileMini" *ngIf="profileMini">
+          <div class="paymentDetails">
+            <div class="historyCard">
+              <p>This month:</p>
+              <span style="color: green">paid </span>
+            </div>
+            <div class="historyCard">
+              <p>Wish to pay?</p>
+              <button
+                style="
+                  text-align: center;
+                  color: white;
+                  background-color: #c9941d;
+                  padding: 2px 10px;
+                  border-radius: 5px;
+                  font-size: 12px;
+                "
+              >
+                Pay now
+              </button>
+            </div>
+          </div>
+          <div class="paymentHistory">
+            <div class="historyBar">
+              <h5 style="text-align: center; color: #c9941d; font-weight: bold">
+                History
+              </h5>
+              <!-- <button>Not paid</button>
+                            <button>Paid</button> -->
+            </div>
+            <div class="historyContainer">
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span style="color: green">paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+              <div class="historyCard">
+                <p>Jan:</p>
+                <span>paid </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- change password -->
+        <div class="profileEdit" *ngIf="profileEdit">
+          <p style="margin-top: 5px">Change password</p>
+          <div class="formContainer">
+            <form action="" class="editForm" (ngSubmit)="onEditProfile()">
+              <input type="email" placeholder="Email" />
+              <input type="text" placeholder="password" />
+              <input type="text" placeholder="confrimPassword" />
+              <button class="editBtn" *ngIf="editProfileBtn">
+                change password
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- bio -->
+      <div class="bio" *ngIf="currentView === 'bio'">
+        <app-bio></app-bio>
+      
+      </div>
+
+      <!-- events -->
+      <div class="events" *ngIf="currentView === 'events'">
+        <h4>Events</h4>
+        <div class="eventsContent">
+          <div class="eventCard">
+            <h4>Event 1</h4>
+            <p>Date: 2023-10-01</p>
+            <p>Location: Location 1</p>
+          </div>
+          <div class="eventCard">
+            <h4>Event 2</h4>
+            <p>Date: 2023-10-02</p>
+            <p>Location: Location 2</p>
+          </div>
+          <div class="eventCard">
+            <h4>Event 3</h4>
+            <p>Date: 2023-10-03</p>
+            <p>Location: Location 3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- rides -->
+      <div class="rides" *ngIf="currentView === 'rides'">
+        <h4>Rides</h4>
+        <div class="ridesContent">
+          <div class="rideCard">
+            <h4>Ride 1</h4>
+            <p>Date: 2023-10-01</p>
+            <p>Location: Location 1</p>
+          </div>
+          <div class="rideCard">
+            <h4>Ride 2</h4>
+            <p>Date: 2023-10-02</p>
+            <p>Location: Location 2</p>
+          </div>
+          <div class="rideCard">
+            <h4>Ride 3</h4>
+            <p>Date: 2023-10-03</p>
+            <p>Location: Location 3</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

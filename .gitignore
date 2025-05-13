@@ -1,0 +1,37 @@
+# Node.js and build outputs
+node_modules/
+dist/
+AridersBackend/node_modules/
+AridersBackend/dist/
+AridersFrontend/node_modules/
+AridersFrontend/dist/
+
+# Firebase
+.firebase/
+AridersFrontend/.firebase/
+
+# Other temporary files
+*.log
+.DS_Store
+
+# Node modules
+**/node_modules/
+node_modules/
+
+# Build outputs
+**/dist/
+dist/
+
+# Environment files
+**/.env
+.env
+
+# IDE configs
+.vscode/
+
+# Angular specific
+**/.angular/cache/
+.angular/cache/
+
+# Supabase
+Supabase/.supabase/
