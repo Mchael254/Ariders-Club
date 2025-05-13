@@ -9,6 +9,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import * as dotenv from 'dotenv'
 dotenv.config();
 
+
 const storage = multer.memoryStorage();
 export const upload = multer({ storage });
 
@@ -18,7 +19,6 @@ cloudinary.config({
     api_secret: process.env.cloudinary_api_secret
 
 })
-
 
 //all members
 export const allMembers = async (req: Request, res: Response) => {

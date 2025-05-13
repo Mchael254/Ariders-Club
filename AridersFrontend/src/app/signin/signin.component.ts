@@ -78,7 +78,39 @@ export class SigninComponent implements OnInit {
       return;
     }
 
-    const form = this.signinForm.getRawValue() as loginForm;
+    const form = this.signinForm.getRawValue() as loginForm
+    const loginData = {
+      email: form.email,
+      password: form.password
+    }
+    this.auth.login(loginData).subscribe({
+      next: async ({ data, error }) => {
+        if (error) {
+          this.response.showError(error.message);
+          return;
+        }
+    
+        const session = data.session;
+        const role = session?.user?.user_metadata?.role || 'member';
+        console.log(role);
+  
+        this.response.showSuccess('Login successful');
+
+        if (role === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/profile']);
+        }
+      },
+      error: (err) => {
+        const errorMessage = err?.error?.message || err?.error?.error || 'An unexpected error occurred';
+        this.response.showError(errorMessage);
+        console.error('Registration error:', err);
+        this.loadingLine = false
+      }
+    
+    });
+
 
     this.store.dispatch(AuthActions.login({ email: form.email, password: form.password }));
   }
