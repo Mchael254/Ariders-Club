@@ -107,11 +107,6 @@ input:focus {
     margin: 10px;
 }
 
-.success-snackbar {
-    --mdc-snackbar-container-color: green;
-    --mat-mdc-snack-bar-button-color: yellow;
-    --mdc-snackbar-supporting-text-color: red;
-  }
 
 @keyframes slide-line {
     0% {

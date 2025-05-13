@@ -1,13 +1,12 @@
 import Router from 'express'
-import {allMembers, loginMember, registerMember} from '../controllers/userController'
+import {allMembers, updateProfilePicture, upload} from '../controllers/userController'
 import { authenticateToken } from '../middlewares/auth'
 
 
 const user_router = Router()
 
-user_router.post('/registerMember',registerMember)
 user_router.get('/allMembers',authenticateToken, allMembers)
-user_router.post('/loginMember',loginMember)
+user_router.post('/upload-profile-picture', upload.single('image'), updateProfilePicture);
 
 
 export default user_router
